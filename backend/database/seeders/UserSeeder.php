@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -42,10 +43,29 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        
+
         $superAdmin->assignRole('Super_Admin');
         $admin->assignRole('Admin');
         $employee->assignRole('Employee');
         $user->assignRole('User');
+
+
+        // Creating bulk amount of users!!
+        for ($i = 0; $i < 50000; $i++) {
+            $data[] = [
+                'name'                  => fake()->name(),
+                'email'                 => fake()->unique()->safeEmail(),
+                'phone'                 => fake()->phoneNumber(),
+                'password'              => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'email_verified_at'     => now(),
+                'remember_token'        => Str::random(10),
+                'created_at'            => now(),
+            ];
+        }
+
+        $chunks = array_chunk($data, 1000);
+        foreach ($chunks as $chunk) {
+            User::insert($chunk);
+        }
     }
 }
