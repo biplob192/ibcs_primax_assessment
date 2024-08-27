@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
@@ -73,7 +72,6 @@ class UserController extends BaseController
 
     public function info()
     {
-        // return auth()->user();
         try {
             $response = $this->userRepository->info();
 
@@ -109,9 +107,6 @@ class UserController extends BaseController
         } catch (Exception $e) {
 
             return $this->sendError($e->getMessage() ? $e->getMessage() : 'Internal server error.', '', $e->getCode() ? $e->getCode() : 500);
-
-            // $error = $e->getMessage();
-            // return $this->sendError('Internal server error.', $error, 500);
         }
     }
 
