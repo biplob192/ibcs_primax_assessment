@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
 
 
         // Creating bulk amount of users!!
-        for ($i = 0; $i < 50000; $i++) {
+        for ($i = 0; $i < 100000; $i++) {
             $data[] = [
                 'name'                  => fake()->name(),
                 'email'                 => fake()->unique()->safeEmail(),
